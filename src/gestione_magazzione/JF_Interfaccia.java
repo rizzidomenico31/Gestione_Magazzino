@@ -6,6 +6,8 @@
 package gestione_magazzione;
 
 import java.util.Random;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -22,9 +24,9 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JP_Lista.setVisible(false);
         JP_Nuovo.setVisible(false);
         JTF_Codice.setEditable(false);
-        
+        ((JSpinner.DefaultEditor) JSP_Quantita.getEditor()).getTextField().setEditable(false);
+       JSP_Quantita.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -55,7 +57,20 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JB_GeneraCodice = new javax.swing.JButton();
         JP_Lista = new javax.swing.JPanel();
         JP_Gestione = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        JCB_Prodotti = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        JTF_NomeMod = new javax.swing.JTextField();
+        CB_CategorieMod = new javax.swing.JComboBox<>();
+        JTF_CodiceMod = new javax.swing.JTextField();
+        JTF_PrezzoMod = new javax.swing.JTextField();
+        JSP_QuantitaMod = new javax.swing.JSpinner();
+        JB_Aggiungi1 = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,6 +82,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JB_LIsta.setForeground(new java.awt.Color(0, 0, 0));
         JB_LIsta.setText("LISTA");
         JB_LIsta.setBorder(null);
+        JB_LIsta.setFocusable(false);
         JB_LIsta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JB_LIstaMouseClicked(evt);
@@ -77,6 +93,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JB_Nuovo.setForeground(new java.awt.Color(0, 0, 0));
         JB_Nuovo.setText("NUOVO PRODOTTO");
         JB_Nuovo.setBorder(null);
+        JB_Nuovo.setFocusable(false);
         JB_Nuovo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JB_NuovoMouseClicked(evt);
@@ -87,6 +104,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JB_Gestione.setForeground(new java.awt.Color(0, 0, 0));
         JB_Gestione.setText("GESTIONE");
         JB_Gestione.setBorder(null);
+        JB_Gestione.setFocusable(false);
         JB_Gestione.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JB_GestioneMouseClicked(evt);
@@ -133,9 +151,24 @@ public class JF_Interfaccia extends javax.swing.JFrame {
 
         jLabel9.setText("QUANTITA'");
 
+        JTF_Nome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTF_NomeKeyReleased(evt);
+            }
+        });
+
         CB_Categorie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnologia", "Cibo", "Accessori", "Bricolage", " " }));
 
+        JTF_Prezzo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTF_PrezzoKeyReleased(evt);
+            }
+        });
+
+        JB_Aggiungi.setBackground(new java.awt.Color(255, 51, 0));
         JB_Aggiungi.setText("ADD");
+        JB_Aggiungi.setBorder(null);
+        JB_Aggiungi.setFocusable(false);
         JB_Aggiungi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JB_AggiungiMouseClicked(evt);
@@ -223,23 +256,123 @@ public class JF_Interfaccia extends javax.swing.JFrame {
             .addGap(0, 391, Short.MAX_VALUE)
         );
 
-        jLabel1.setText("1234");
+        JCB_Prodotti.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                JCB_ProdottiItemStateChanged(evt);
+            }
+        });
+
+        jLabel3.setText("Seleziona prodotto");
+
+        jLabel10.setText("-----------------------------------------------------------------------------------------------");
+
+        jLabel11.setText("CODICE");
+
+        jLabel12.setText("PREZZO");
+
+        jLabel13.setText("QUANTITA'");
+
+        JTF_NomeMod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTF_NomeModKeyReleased(evt);
+            }
+        });
+
+        CB_CategorieMod.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tecnologia", "Cibo", "Accessori", "Bricolage", " " }));
+
+        JTF_PrezzoMod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                JTF_PrezzoModKeyReleased(evt);
+            }
+        });
+
+        JB_Aggiungi1.setBackground(new java.awt.Color(255, 51, 0));
+        JB_Aggiungi1.setText("APPLICA");
+        JB_Aggiungi1.setBorder(null);
+        JB_Aggiungi1.setFocusable(false);
+        JB_Aggiungi1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JB_Aggiungi1MouseClicked(evt);
+            }
+        });
+
+        jLabel14.setText("NOME");
+
+        jLabel15.setText("CATEGORIA");
 
         javax.swing.GroupLayout JP_GestioneLayout = new javax.swing.GroupLayout(JP_Gestione);
         JP_Gestione.setLayout(JP_GestioneLayout);
         JP_GestioneLayout.setHorizontalGroup(
             JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JP_GestioneLayout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(JCB_Prodotti, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(JP_GestioneLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(JP_GestioneLayout.createSequentialGroup()
+                    .addGap(73, 73, 73)
+                    .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(JP_GestioneLayout.createSequentialGroup()
+                            .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(JTF_NomeMod)
+                                    .addComponent(CB_CategorieMod, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(JSP_QuantitaMod, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JTF_PrezzoMod, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                                    .addComponent(JTF_CodiceMod, javax.swing.GroupLayout.Alignment.LEADING)))
+                            .addGap(21, 21, 21))
+                        .addGroup(JP_GestioneLayout.createSequentialGroup()
+                            .addComponent(JB_Aggiungi1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGap(73, 73, 73)))
         );
         JP_GestioneLayout.setVerticalGroup(
             JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JP_GestioneLayout.createSequentialGroup()
-                .addGap(133, 133, 133)
-                .addComponent(jLabel1)
-                .addContainerGap(254, Short.MAX_VALUE))
+                .addComponent(jLabel3)
+                .addGap(8, 8, 8)
+                .addComponent(JCB_Prodotti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel10)
+                .addContainerGap(323, Short.MAX_VALUE))
+            .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(JP_GestioneLayout.createSequentialGroup()
+                    .addGap(81, 81, 81)
+                    .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel14)
+                        .addComponent(JTF_NomeMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(CB_CategorieMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel11)
+                        .addComponent(JTF_CodiceMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel12)
+                        .addComponent(JTF_PrezzoMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JSP_QuantitaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(27, 27, 27)
+                    .addComponent(JB_Aggiungi1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(81, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -293,6 +426,10 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JP_Gestione.setVisible(true);
         JP_Lista.setVisible(false);
         JP_Nuovo.setVisible(false);
+        JCB_Prodotti.removeAllItems();
+        for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+            JCB_Prodotti.addItem(Gestione_Magazzione.prodotti.get(i).getNome());
+        }
     }//GEN-LAST:event_JB_GestioneMouseClicked
 
     private void JB_LIstaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JB_LIstaMouseClicked
@@ -316,7 +453,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
             }
             
         }  
-        }while(flag == true);
+        }while(flag == false);
         
         JTF_Codice.setText(String.valueOf(codiceRand));
                
@@ -324,17 +461,60 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     }//GEN-LAST:event_JB_GeneraCodiceMouseClicked
 
     private void JB_AggiungiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JB_AggiungiMouseClicked
-       if(!JTF_Codice.getText().equals("")){
-           Prodotto prodotto = new Prodotto(JTF_Nome.getText(), (String)CB_Categorie.getSelectedItem(), Integer.parseInt(JTF_Codice.getText()), (int)JSP_Quantita.getValue(), Integer.parseInt(JTF_Prezzo.getText()));
+       if(!JTF_Codice.getText().equals("") && !JTF_Nome.getText().equals("") && !JTF_Prezzo.getText().equals("")){
+           Prodotto prodotto = new Prodotto(JTF_Nome.getText(), (String)CB_Categorie.getSelectedItem(), Integer.parseInt(JTF_Codice.getText()), (int)JSP_Quantita.getValue(), Float.parseFloat(JTF_Prezzo.getText()));
         Gestione_Magazzione.prodotti.add(prodotto);
+        JTF_Codice.setText("");
+        JTF_Nome.setText("");
+        JTF_Prezzo.setText("");
+        JSP_Quantita.setValue(0);
+        
        }else{
-           System.out.println("Genera il codice dall'apposito pulsante");
+           System.out.println("Inserisci tutti i dati richiesti dal mio fantastico programma");
        }
        
-       //devi mettere gli azzeramenti
+       
        
         
     }//GEN-LAST:event_JB_AggiungiMouseClicked
+
+    private void JTF_NomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTF_NomeKeyReleased
+        
+    }//GEN-LAST:event_JTF_NomeKeyReleased
+
+    private void JTF_PrezzoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTF_PrezzoKeyReleased
+        if (JTF_Prezzo.getText().length()>0){
+            if (Character.isDigit(JTF_Prezzo.getText().charAt(JTF_Prezzo.getText().length()-1)) == false && JTF_Prezzo.getText().charAt(JTF_Prezzo.getText().length()-1) != '.'){
+                JTF_Prezzo.setText(JTF_Prezzo.getText().substring(0 , JTF_Prezzo.getText().length()-1));
+            }
+        }
+    }//GEN-LAST:event_JTF_PrezzoKeyReleased
+
+    private void JTF_NomeModKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTF_NomeModKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTF_NomeModKeyReleased
+
+    private void JTF_PrezzoModKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTF_PrezzoModKeyReleased
+        if (JTF_PrezzoMod.getText().length()>0){
+            if (Character.isDigit(JTF_PrezzoMod.getText().charAt(JTF_PrezzoMod.getText().length()-1)) == false && JTF_PrezzoMod.getText().charAt(JTF_PrezzoMod.getText().length()-1) != '.'){
+                JTF_PrezzoMod.setText(JTF_PrezzoMod.getText().substring(0 , JTF_PrezzoMod.getText().length()-1));
+            }
+        }
+    }//GEN-LAST:event_JTF_PrezzoModKeyReleased
+
+    private void JB_Aggiungi1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JB_Aggiungi1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JB_Aggiungi1MouseClicked
+
+    private void JCB_ProdottiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCB_ProdottiItemStateChanged
+        Prodotto prodotto = Gestione_Magazzione.prodotti.get(JCB_Prodotti.getSelectedIndex());
+        
+        JTF_CodiceMod.setText(String.valueOf(prodotto.getCodice()));
+        JTF_NomeMod.setText(prodotto.getNome());
+        JTF_PrezzoMod.setText(String.valueOf(prodotto.getPrezzo()));
+        CB_CategorieMod.removeAllItems();
+        CB_CategorieMod.addItem(prodotto.getCategoria());
+    }//GEN-LAST:event_JCB_ProdottiItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -372,27 +552,41 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CB_Categorie;
-    private javax.swing.JButton JB_Aggiungi;
-    private javax.swing.JButton JB_GeneraCodice;
-    private javax.swing.JButton JB_Gestione;
-    private javax.swing.JButton JB_LIsta;
-    private javax.swing.JButton JB_Nuovo;
-    private javax.swing.JPanel JP_Gestione;
-    private javax.swing.JPanel JP_Lista;
-    private javax.swing.JPanel JP_Nuovo;
-    private javax.swing.JSpinner JSP_Quantita;
-    private javax.swing.JTextField JTF_Codice;
-    private javax.swing.JTextField JTF_Nome;
-    private javax.swing.JTextField JTF_Prezzo;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    public javax.swing.JComboBox<String> CB_Categorie;
+    public javax.swing.JComboBox<String> CB_CategorieMod;
+    public javax.swing.JButton JB_Aggiungi;
+    public javax.swing.JButton JB_Aggiungi1;
+    public javax.swing.JButton JB_GeneraCodice;
+    public javax.swing.JButton JB_Gestione;
+    public javax.swing.JButton JB_LIsta;
+    public javax.swing.JButton JB_Nuovo;
+    public javax.swing.JComboBox<String> JCB_Prodotti;
+    public javax.swing.JPanel JP_Gestione;
+    public javax.swing.JPanel JP_Lista;
+    public javax.swing.JPanel JP_Nuovo;
+    public javax.swing.JSpinner JSP_Quantita;
+    public javax.swing.JSpinner JSP_QuantitaMod;
+    public javax.swing.JTextField JTF_Codice;
+    public javax.swing.JTextField JTF_CodiceMod;
+    public javax.swing.JTextField JTF_Nome;
+    public javax.swing.JTextField JTF_NomeMod;
+    public javax.swing.JTextField JTF_Prezzo;
+    public javax.swing.JTextField JTF_PrezzoMod;
+    public javax.swing.JLabel jLabel10;
+    public javax.swing.JLabel jLabel11;
+    public javax.swing.JLabel jLabel12;
+    public javax.swing.JLabel jLabel13;
+    public javax.swing.JLabel jLabel14;
+    public javax.swing.JLabel jLabel15;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel4;
+    public javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
+    public javax.swing.JLabel jLabel7;
+    public javax.swing.JLabel jLabel8;
+    public javax.swing.JLabel jLabel9;
+    public javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
 }
