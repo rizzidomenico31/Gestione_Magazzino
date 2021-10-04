@@ -5,9 +5,15 @@
  */
 package gestione_magazzione;
 
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.Random;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.table.DefaultTableModel;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  *
@@ -25,8 +31,12 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JP_Nuovo.setVisible(false);
         JTF_Codice.setEditable(false);
         ((JSpinner.DefaultEditor) JSP_Quantita.getEditor()).getTextField().setEditable(false);
-       JSP_Quantita.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
+        JSP_Quantita.setModel(new SpinnerNumberModel(0, 0, 1000, 1));
+
+        JTF_CodiceMod.setEditable(false);
+        JP_Filter.setVisible(false);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,11 +46,14 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         JB_LIsta = new javax.swing.JButton();
         JB_Nuovo = new javax.swing.JButton();
         JB_Gestione = new javax.swing.JButton();
+        JL_Exit = new javax.swing.JLabel();
         JP_Nuovo = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -56,6 +69,14 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JB_Aggiungi = new javax.swing.JButton();
         JB_GeneraCodice = new javax.swing.JButton();
         JP_Lista = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        JT_Lista = new javax.swing.JTable();
+        JP_Filter = new javax.swing.JPanel();
+        JRB_PrezzoUP = new javax.swing.JRadioButton();
+        JRB_Disponibili = new javax.swing.JRadioButton();
+        JRB_PrezzoDW = new javax.swing.JRadioButton();
+        jLabel16 = new javax.swing.JLabel();
         JP_Gestione = new javax.swing.JPanel();
         JCB_Prodotti = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
@@ -68,11 +89,23 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JTF_CodiceMod = new javax.swing.JTextField();
         JTF_PrezzoMod = new javax.swing.JTextField();
         JSP_QuantitaMod = new javax.swing.JSpinner();
-        JB_Aggiungi1 = new javax.swing.JButton();
+        JB_Applica = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        JL_MessaggioMod = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 51, 51));
 
@@ -111,6 +144,13 @@ public class JF_Interfaccia extends javax.swing.JFrame {
             }
         });
 
+        JL_Exit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/logout.png"))); // NOI18N
+        JL_Exit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JL_ExitMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -121,6 +161,9 @@ public class JF_Interfaccia extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(JL_Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(JB_LIsta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JB_Gestione, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JB_Nuovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -130,13 +173,15 @@ public class JF_Interfaccia extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
                 .addComponent(JB_Nuovo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(JB_Gestione, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(JB_LIsta, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(130, 130, 130))
+                .addGap(82, 82, 82)
+                .addComponent(JL_Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel4.setText("INSERISCI UN NUOVO PRODOTTO");
@@ -195,7 +240,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
                             .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                         .addGroup(JP_NuovoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(JP_NuovoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -242,18 +287,118 @@ public class JF_Interfaccia extends javax.swing.JFrame {
                     .addComponent(JSP_Quantita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(JB_Aggiungi, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(122, Short.MAX_VALUE))
+                .addContainerGap(157, Short.MAX_VALUE))
         );
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("LISTA PRODOTTI DISPONIBILI");
+
+        JT_Lista.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "NOME", "CODICE", "CATEGORIA", "SCORTA", "PREZZO UNITARIO"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Float.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(JT_Lista);
+
+        buttonGroup1.add(JRB_PrezzoUP);
+        JRB_PrezzoUP.setText("PREZZO CRESCENTE");
+        JRB_PrezzoUP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JRB_PrezzoUPMouseClicked(evt);
+            }
+        });
+
+        buttonGroup1.add(JRB_Disponibili);
+        JRB_Disponibili.setText("DISPONIBILI");
+        JRB_Disponibili.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JRB_DisponibiliMouseClicked(evt);
+            }
+        });
+
+        buttonGroup1.add(JRB_PrezzoDW);
+        JRB_PrezzoDW.setText("PREZZO DECRESCENTE");
+        JRB_PrezzoDW.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JRB_PrezzoDWMouseClicked(evt);
+            }
+        });
+        JRB_PrezzoDW.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JRB_PrezzoDWActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout JP_FilterLayout = new javax.swing.GroupLayout(JP_Filter);
+        JP_Filter.setLayout(JP_FilterLayout);
+        JP_FilterLayout.setHorizontalGroup(
+            JP_FilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JP_FilterLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(JRB_PrezzoUP, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JRB_PrezzoDW, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(JRB_Disponibili, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        JP_FilterLayout.setVerticalGroup(
+            JP_FilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_FilterLayout.createSequentialGroup()
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addGroup(JP_FilterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(JRB_PrezzoUP)
+                    .addComponent(JRB_PrezzoDW)
+                    .addComponent(JRB_Disponibili))
+                .addContainerGap())
+        );
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/filter_filters_funnel_list_navigation_sort_sorting_icon_123212.png"))); // NOI18N
+        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel16MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout JP_ListaLayout = new javax.swing.GroupLayout(JP_Lista);
         JP_Lista.setLayout(JP_ListaLayout);
         JP_ListaLayout.setHorizontalGroup(
             JP_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGroup(JP_ListaLayout.createSequentialGroup()
+                .addComponent(JP_Filter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+            .addGroup(JP_ListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JP_ListaLayout.setVerticalGroup(
             JP_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 391, Short.MAX_VALUE)
+            .addGroup(JP_ListaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(JP_ListaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JP_Filter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         JCB_Prodotti.addItemListener(new java.awt.event.ItemListener() {
@@ -286,13 +431,13 @@ public class JF_Interfaccia extends javax.swing.JFrame {
             }
         });
 
-        JB_Aggiungi1.setBackground(new java.awt.Color(255, 51, 0));
-        JB_Aggiungi1.setText("APPLICA");
-        JB_Aggiungi1.setBorder(null);
-        JB_Aggiungi1.setFocusable(false);
-        JB_Aggiungi1.addMouseListener(new java.awt.event.MouseAdapter() {
+        JB_Applica.setBackground(new java.awt.Color(255, 51, 0));
+        JB_Applica.setText("APPLICA");
+        JB_Applica.setBorder(null);
+        JB_Applica.setFocusable(false);
+        JB_Applica.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JB_Aggiungi1MouseClicked(evt);
+                JB_ApplicaMouseClicked(evt);
             }
         });
 
@@ -313,6 +458,10 @@ public class JF_Interfaccia extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(JP_GestioneLayout.createSequentialGroup()
+                .addGap(171, 171, 171)
+                .addComponent(JL_MessaggioMod, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(JP_GestioneLayout.createSequentialGroup()
                     .addGap(73, 73, 73)
@@ -335,7 +484,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
                                     .addComponent(JTF_CodiceMod, javax.swing.GroupLayout.Alignment.LEADING)))
                             .addGap(21, 21, 21))
                         .addGroup(JP_GestioneLayout.createSequentialGroup()
-                            .addComponent(JB_Aggiungi1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JB_Applica, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGap(73, 73, 73)))
         );
@@ -347,7 +496,9 @@ public class JF_Interfaccia extends javax.swing.JFrame {
                 .addComponent(JCB_Prodotti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel10)
-                .addContainerGap(323, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
+                .addComponent(JL_MessaggioMod, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(79, 79, 79))
             .addGroup(JP_GestioneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(JP_GestioneLayout.createSequentialGroup()
                     .addGap(81, 81, 81)
@@ -371,7 +522,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(JSP_QuantitaMod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGap(27, 27, 27)
-                    .addComponent(JB_Aggiungi1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JB_Applica, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(81, Short.MAX_VALUE)))
         );
 
@@ -391,7 +542,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
                     .addContainerGap()))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(0, 200, Short.MAX_VALUE)
+                    .addGap(0, 282, Short.MAX_VALUE)
                     .addComponent(JP_Gestione, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
@@ -427,65 +578,76 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JP_Lista.setVisible(false);
         JP_Nuovo.setVisible(false);
         JCB_Prodotti.removeAllItems();
-        for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+        JL_MessaggioMod.setText("");
+        JTF_CodiceMod.setText("");
+        JTF_NomeMod.setText("");
+        JTF_PrezzoMod.setText("");
+        JSP_QuantitaMod.setValue(0);
+        for (int i = 0; i < Gestione_Magazzione.prodotti.size(); i++) {
             JCB_Prodotti.addItem(Gestione_Magazzione.prodotti.get(i).getNome());
         }
     }//GEN-LAST:event_JB_GestioneMouseClicked
 
     private void JB_LIstaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JB_LIstaMouseClicked
-       JP_Gestione.setVisible(false);
+        JP_Gestione.setVisible(false);
         JP_Lista.setVisible(true);
         JP_Nuovo.setVisible(false);
+         DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
+         model.setRowCount(0);
+        
+        
+        for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+            Prodotto prodotto = Gestione_Magazzione.prodotti.get(i);
+                        model.addRow(new Object[]{prodotto.getNome() , prodotto.getCodice() , prodotto.getCategoria() , prodotto.getScorta() , prodotto.getPrezzo()});
+        }
     }//GEN-LAST:event_JB_LIstaMouseClicked
 
     private void JB_GeneraCodiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JB_GeneraCodiceMouseClicked
         boolean flag = false;
         int codiceRand;
-        do{
-          Random rand = new Random();
-        codiceRand = rand.nextInt((99999 - 11111) + 1) + 11111;
-        
-        for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
-            flag = true;
-            if (Gestione_Magazzione.prodotti.get(i).getCodice() == codiceRand){
+        do {
+            Random rand = new Random();
+            codiceRand = rand.nextInt((99999 - 11111) + 1) + 11111;
+
+            for (int i = 0; i < Gestione_Magazzione.prodotti.size(); i++) {
                 flag = false;
-                i = Gestione_Magazzione.prodotti.size();
+                if (Gestione_Magazzione.prodotti.get(i).getCodice() == codiceRand) {
+                    flag = true;
+                    i = Gestione_Magazzione.prodotti.size();
+                }
+
             }
-            
-        }  
-        }while(flag == false);
-        
+        } while (flag == true);
+
         JTF_Codice.setText(String.valueOf(codiceRand));
-               
-        
+
+
     }//GEN-LAST:event_JB_GeneraCodiceMouseClicked
 
     private void JB_AggiungiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JB_AggiungiMouseClicked
-       if(!JTF_Codice.getText().equals("") && !JTF_Nome.getText().equals("") && !JTF_Prezzo.getText().equals("")){
-           Prodotto prodotto = new Prodotto(JTF_Nome.getText(), (String)CB_Categorie.getSelectedItem(), Integer.parseInt(JTF_Codice.getText()), (int)JSP_Quantita.getValue(), Float.parseFloat(JTF_Prezzo.getText()));
-        Gestione_Magazzione.prodotti.add(prodotto);
-        JTF_Codice.setText("");
-        JTF_Nome.setText("");
-        JTF_Prezzo.setText("");
-        JSP_Quantita.setValue(0);
-        
-       }else{
-           System.out.println("Inserisci tutti i dati richiesti dal mio fantastico programma");
-       }
-       
-       
-       
-        
+        if (!JTF_Codice.getText().equals("") && !JTF_Nome.getText().equals("") && !JTF_Prezzo.getText().equals("")) {
+            Prodotto prodotto = new Prodotto(JTF_Nome.getText(), (String) CB_Categorie.getSelectedItem(), Integer.parseInt(JTF_Codice.getText()), (int) JSP_Quantita.getValue(), Float.parseFloat(JTF_Prezzo.getText()));
+            Gestione_Magazzione.prodotti.add(prodotto);
+            JTF_Codice.setText("");
+            JTF_Nome.setText("");
+            JTF_Prezzo.setText("");
+            JSP_Quantita.setValue(0);
+
+        } else {
+            System.out.println("Inserisci tutti i dati richiesti dal mio fantastico programma");
+        }
+
+
     }//GEN-LAST:event_JB_AggiungiMouseClicked
 
     private void JTF_NomeKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTF_NomeKeyReleased
-        
+
     }//GEN-LAST:event_JTF_NomeKeyReleased
 
     private void JTF_PrezzoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTF_PrezzoKeyReleased
-        if (JTF_Prezzo.getText().length()>0){
-            if (Character.isDigit(JTF_Prezzo.getText().charAt(JTF_Prezzo.getText().length()-1)) == false && JTF_Prezzo.getText().charAt(JTF_Prezzo.getText().length()-1) != '.'){
-                JTF_Prezzo.setText(JTF_Prezzo.getText().substring(0 , JTF_Prezzo.getText().length()-1));
+        if (JTF_Prezzo.getText().length() > 0) {
+            if (Character.isDigit(JTF_Prezzo.getText().charAt(JTF_Prezzo.getText().length() - 1)) == false && JTF_Prezzo.getText().charAt(JTF_Prezzo.getText().length() - 1) != '.') {
+                JTF_Prezzo.setText(JTF_Prezzo.getText().substring(0, JTF_Prezzo.getText().length() - 1));
             }
         }
     }//GEN-LAST:event_JTF_PrezzoKeyReleased
@@ -495,26 +657,129 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     }//GEN-LAST:event_JTF_NomeModKeyReleased
 
     private void JTF_PrezzoModKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTF_PrezzoModKeyReleased
-        if (JTF_PrezzoMod.getText().length()>0){
-            if (Character.isDigit(JTF_PrezzoMod.getText().charAt(JTF_PrezzoMod.getText().length()-1)) == false && JTF_PrezzoMod.getText().charAt(JTF_PrezzoMod.getText().length()-1) != '.'){
-                JTF_PrezzoMod.setText(JTF_PrezzoMod.getText().substring(0 , JTF_PrezzoMod.getText().length()-1));
+        if (JTF_PrezzoMod.getText().length() > 0) {
+            if (Character.isDigit(JTF_PrezzoMod.getText().charAt(JTF_PrezzoMod.getText().length() - 1)) == false && JTF_PrezzoMod.getText().charAt(JTF_PrezzoMod.getText().length() - 1) != '.') {
+                JTF_PrezzoMod.setText(JTF_PrezzoMod.getText().substring(0, JTF_PrezzoMod.getText().length() - 1));
             }
         }
     }//GEN-LAST:event_JTF_PrezzoModKeyReleased
 
-    private void JB_Aggiungi1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JB_Aggiungi1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JB_Aggiungi1MouseClicked
+    private void JB_ApplicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JB_ApplicaMouseClicked
+        int index = JCB_Prodotti.getSelectedIndex();
+
+        Prodotto prodotto = Gestione_Magazzione.prodotti.get(index);
+        prodotto.setNome(JTF_NomeMod.getText());
+        prodotto.setCategoria((String) CB_CategorieMod.getSelectedItem());
+        prodotto.setPrezzo(Float.parseFloat(JTF_PrezzoMod.getText()));
+        prodotto.setScorta((int) JSP_QuantitaMod.getValue());
+        JTF_CodiceMod.setText("");
+        JTF_NomeMod.setText("");
+        JTF_PrezzoMod.setText("");
+        JSP_QuantitaMod.setValue(0);
+        JL_MessaggioMod.setText("Modifiche applicate con successo!");
+    }//GEN-LAST:event_JB_ApplicaMouseClicked
 
     private void JCB_ProdottiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCB_ProdottiItemStateChanged
-        Prodotto prodotto = Gestione_Magazzione.prodotti.get(JCB_Prodotti.getSelectedIndex());
-        
-        JTF_CodiceMod.setText(String.valueOf(prodotto.getCodice()));
-        JTF_NomeMod.setText(prodotto.getNome());
-        JTF_PrezzoMod.setText(String.valueOf(prodotto.getPrezzo()));
-        CB_CategorieMod.removeAllItems();
-        CB_CategorieMod.addItem(prodotto.getCategoria());
+        if (JCB_Prodotti.getSelectedIndex() > -1) {
+            JL_MessaggioMod.setText("");
+            JTF_CodiceMod.setText("");
+            JTF_NomeMod.setText("");
+            JTF_PrezzoMod.setText("");
+            JSP_QuantitaMod.setValue(0);
+
+            Prodotto prodotto = Gestione_Magazzione.prodotti.get(JCB_Prodotti.getSelectedIndex());
+
+            JTF_CodiceMod.setText(String.valueOf(prodotto.getCodice()));
+            JTF_NomeMod.setText(prodotto.getNome());
+            JTF_PrezzoMod.setText(String.valueOf(prodotto.getPrezzo()));
+            JSP_QuantitaMod.setValue(prodotto.getScorta());
+            CB_CategorieMod.removeAllItems();
+            CB_CategorieMod.addItem(prodotto.getCategoria());
+        }
+
+
     }//GEN-LAST:event_JCB_ProdottiItemStateChanged
+
+    private void JL_ExitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JL_ExitMouseClicked
+        FileOutputStream out = null;
+
+        try {
+            out = new FileOutputStream(Gestione_Magazzione.nomefile);
+            ObjectOutputStream scrivifile = new ObjectOutputStream(out);
+            scrivifile.writeObject(Gestione_Magazzione.prodotti);
+        } catch (Exception ex) {
+//Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                out.close();
+            } catch (Exception ex) {
+//Logger.getLogger(main.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        System.exit(0);
+    }//GEN-LAST:event_JL_ExitMouseClicked
+
+    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
+        if (JP_Filter.isVisible() == true){
+            JP_Filter.setVisible(false);
+        }else{
+            JP_Filter.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabel16MouseClicked
+
+    private void JRB_PrezzoDWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JRB_PrezzoDWActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JRB_PrezzoDWActionPerformed
+
+    private void JRB_PrezzoUPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRB_PrezzoUPMouseClicked
+        DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
+        
+        if (JRB_PrezzoUP.isSelected() == true){
+            model.setNumRows(0);
+            double max[] = new double[Gestione_Magazzione.prodotti.size()];
+            for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+                max[i] = Gestione_Magazzione.prodotti.get(i).getPrezzo();
+            }
+            
+            Arrays.sort(max);
+            
+            for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+                for (int j=0;j<Gestione_Magazzione.prodotti.size();j++){
+                    if (max[i] == Gestione_Magazzione.prodotti.get(j).getPrezzo() ){
+                        Prodotto prodotto = Gestione_Magazzione.prodotti.get(j);
+                        model.addRow(new Object[]{prodotto.getNome() , prodotto.getCodice() , prodotto.getCategoria() , prodotto.getScorta() , prodotto.getPrezzo()});
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_JRB_PrezzoUPMouseClicked
+
+    private void JRB_PrezzoDWMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRB_PrezzoDWMouseClicked
+       DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
+        
+        if (JRB_PrezzoUP.isSelected() == true){
+            model.setNumRows(0);
+            double max[] = new double[Gestione_Magazzione.prodotti.size()];
+            for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+                max[i] = Gestione_Magazzione.prodotti.get(i).getPrezzo();
+            }
+            
+            Arrays.sort(max , Collections.reverseOrder());
+            
+            for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+                for (int j=0;j<Gestione_Magazzione.prodotti.size();j++){
+                    if (max[i] == Gestione_Magazzione.prodotti.get(j).getPrezzo() ){
+                        Prodotto prodotto = Gestione_Magazzione.prodotti.get(j);
+                        model.addRow(new Object[]{prodotto.getNome() , prodotto.getCodice() , prodotto.getCategoria() , prodotto.getScorta() , prodotto.getPrezzo()});
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_JRB_PrezzoDWMouseClicked
+
+    private void JRB_DisponibiliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRB_DisponibiliMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JRB_DisponibiliMouseClicked
 
     /**
      * @param args the command line arguments
@@ -523,7 +788,7 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -555,15 +820,21 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> CB_Categorie;
     public javax.swing.JComboBox<String> CB_CategorieMod;
     public javax.swing.JButton JB_Aggiungi;
-    public javax.swing.JButton JB_Aggiungi1;
+    public javax.swing.JButton JB_Applica;
     public javax.swing.JButton JB_GeneraCodice;
     public javax.swing.JButton JB_Gestione;
     public javax.swing.JButton JB_LIsta;
     public javax.swing.JButton JB_Nuovo;
     public javax.swing.JComboBox<String> JCB_Prodotti;
+    public javax.swing.JLabel JL_Exit;
+    public javax.swing.JLabel JL_MessaggioMod;
+    public javax.swing.JPanel JP_Filter;
     public javax.swing.JPanel JP_Gestione;
     public javax.swing.JPanel JP_Lista;
     public javax.swing.JPanel JP_Nuovo;
+    public javax.swing.JRadioButton JRB_Disponibili;
+    public javax.swing.JRadioButton JRB_PrezzoDW;
+    public javax.swing.JRadioButton JRB_PrezzoUP;
     public javax.swing.JSpinner JSP_Quantita;
     public javax.swing.JSpinner JSP_QuantitaMod;
     public javax.swing.JTextField JTF_Codice;
@@ -572,12 +843,16 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     public javax.swing.JTextField JTF_NomeMod;
     public javax.swing.JTextField JTF_Prezzo;
     public javax.swing.JTextField JTF_PrezzoMod;
+    public javax.swing.JTable JT_Lista;
+    public javax.swing.ButtonGroup buttonGroup1;
+    public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel10;
     public javax.swing.JLabel jLabel11;
     public javax.swing.JLabel jLabel12;
     public javax.swing.JLabel jLabel13;
     public javax.swing.JLabel jLabel14;
     public javax.swing.JLabel jLabel15;
+    public javax.swing.JLabel jLabel16;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel4;
@@ -587,6 +862,8 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel8;
     public javax.swing.JLabel jLabel9;
     public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
+    public javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
 }

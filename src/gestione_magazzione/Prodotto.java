@@ -5,11 +5,13 @@
  */
 package gestione_magazzione;
 
+import java.io.Serializable;
+
 /**
  *
  * @author free
  */
-public class Prodotto {
+public class Prodotto implements Serializable{
     private String nome , categoria;
     private int codice , scorta;
     private double prezzo;
@@ -61,6 +63,14 @@ public class Prodotto {
 
     public double getPrezzo() {
         return prezzo;
+    }
+
+    public void setCodice(int codice) {
+        this.codice = codice;
+    }
+
+    public void setScorta(int scorta) {
+        this.scorta = scorta;
     }
     
     
