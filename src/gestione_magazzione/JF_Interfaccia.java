@@ -592,13 +592,12 @@ public class JF_Interfaccia extends javax.swing.JFrame {
         JP_Gestione.setVisible(false);
         JP_Lista.setVisible(true);
         JP_Nuovo.setVisible(false);
-         DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
-         model.setRowCount(0);
-        
-        
-        for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+        DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
+        model.setRowCount(0);
+
+        for (int i = 0; i < Gestione_Magazzione.prodotti.size(); i++) {
             Prodotto prodotto = Gestione_Magazzione.prodotti.get(i);
-                        model.addRow(new Object[]{prodotto.getNome() , prodotto.getCodice() , prodotto.getCategoria() , prodotto.getScorta() , prodotto.getPrezzo()});
+            model.addRow(new Object[]{prodotto.getNome(), prodotto.getCodice(), prodotto.getCategoria(), prodotto.getScorta(), prodotto.getPrezzo()});
         }
     }//GEN-LAST:event_JB_LIstaMouseClicked
 
@@ -720,9 +719,9 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     }//GEN-LAST:event_JL_ExitMouseClicked
 
     private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
-        if (JP_Filter.isVisible() == true){
+        if (JP_Filter.isVisible() == true) {
             JP_Filter.setVisible(false);
-        }else{
+        } else {
             JP_Filter.setVisible(true);
         }
     }//GEN-LAST:event_jLabel16MouseClicked
@@ -733,21 +732,21 @@ public class JF_Interfaccia extends javax.swing.JFrame {
 
     private void JRB_PrezzoUPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRB_PrezzoUPMouseClicked
         DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
-        
-        if (JRB_PrezzoUP.isSelected() == true){
+
+        if (JRB_PrezzoUP.isSelected() == true) {
             model.setNumRows(0);
             double max[] = new double[Gestione_Magazzione.prodotti.size()];
-            for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+            for (int i = 0; i < Gestione_Magazzione.prodotti.size(); i++) {
                 max[i] = Gestione_Magazzione.prodotti.get(i).getPrezzo();
             }
-            
+
             Arrays.sort(max);
-            
-            for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
-                for (int j=0;j<Gestione_Magazzione.prodotti.size();j++){
-                    if (max[i] == Gestione_Magazzione.prodotti.get(j).getPrezzo() ){
+
+            for (int i = 0; i < Gestione_Magazzione.prodotti.size(); i++) {
+                for (int j = 0; j < Gestione_Magazzione.prodotti.size(); j++) {
+                    if (max[i] == Gestione_Magazzione.prodotti.get(j).getPrezzo()) {
                         Prodotto prodotto = Gestione_Magazzione.prodotti.get(j);
-                        model.addRow(new Object[]{prodotto.getNome() , prodotto.getCodice() , prodotto.getCategoria() , prodotto.getScorta() , prodotto.getPrezzo()});
+                        model.addRow(new Object[]{prodotto.getNome(), prodotto.getCodice(), prodotto.getCategoria(), prodotto.getScorta(), prodotto.getPrezzo()});
                     }
                 }
             }
@@ -755,22 +754,30 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     }//GEN-LAST:event_JRB_PrezzoUPMouseClicked
 
     private void JRB_PrezzoDWMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRB_PrezzoDWMouseClicked
-       DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
-        
-        if (JRB_PrezzoUP.isSelected() == true){
+        DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
+
+        if (JRB_PrezzoDW.isSelected() == true) {
             model.setNumRows(0);
             double max[] = new double[Gestione_Magazzione.prodotti.size()];
-            for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+            for (int i = 0; i < Gestione_Magazzione.prodotti.size(); i++) {
                 max[i] = Gestione_Magazzione.prodotti.get(i).getPrezzo();
             }
+
+            Arrays.sort(max);
             
-            Arrays.sort(max , Collections.reverseOrder());
+            double min[] = new double[max.length];
             
-            for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
-                for (int j=0;j<Gestione_Magazzione.prodotti.size();j++){
-                    if (max[i] == Gestione_Magazzione.prodotti.get(j).getPrezzo() ){
+            int p=max.length;
+            for (int i = 0; i < max.length; i++) {
+                min[p - 1] = max[i];
+                p = p - 1;
+            }
+
+            for (int i = 0; i < Gestione_Magazzione.prodotti.size(); i++) {
+                for (int j = 0; j < Gestione_Magazzione.prodotti.size(); j++) {
+                    if (max[i] == Gestione_Magazzione.prodotti.get(j).getPrezzo()) {
                         Prodotto prodotto = Gestione_Magazzione.prodotti.get(j);
-                        model.addRow(new Object[]{prodotto.getNome() , prodotto.getCodice() , prodotto.getCategoria() , prodotto.getScorta() , prodotto.getPrezzo()});
+                        model.addRow(new Object[]{prodotto.getNome(), prodotto.getCodice(), prodotto.getCategoria(), prodotto.getScorta(), prodotto.getPrezzo()});
                     }
                 }
             }
@@ -778,7 +785,16 @@ public class JF_Interfaccia extends javax.swing.JFrame {
     }//GEN-LAST:event_JRB_PrezzoDWMouseClicked
 
     private void JRB_DisponibiliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JRB_DisponibiliMouseClicked
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) JT_Lista.getModel();
+        if (JRB_Disponibili.isSelected() == true){
+            model.setRowCount(0);
+           for (int i=0;i<Gestione_Magazzione.prodotti.size();i++){
+               if (Gestione_Magazzione.prodotti.get(i).getScorta()>0){
+                   Prodotto prodotto = Gestione_Magazzione.prodotti.get(i);
+                   model.addRow(new Object[]{prodotto.getNome(), prodotto.getCodice(), prodotto.getCategoria(), prodotto.getScorta(), prodotto.getPrezzo()});
+               }
+           }
+       }
     }//GEN-LAST:event_JRB_DisponibiliMouseClicked
 
     /**

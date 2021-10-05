@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class Prodotto implements Serializable{
     private String nome , categoria;
-    private int codice , scorta;
+    private int codice , scorta , scortamin;
     private double prezzo;
 
     public Prodotto(String nome, String categoria, int codice, int scorta, double prezzo) {
@@ -22,6 +22,7 @@ public class Prodotto implements Serializable{
         this.codice = codice;
         this.scorta = scorta;
         this.prezzo = prezzo;
+        this.scortamin=scortamin;
     }
     
     
